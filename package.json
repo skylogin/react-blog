@@ -1,0 +1,24 @@
+{
+  "name": "react-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-addons-update": "^0.14.2",
+    "react-router": "^1.0.0",
+    "history": "^1.13.1",
+    "reflux": "^0.3.0",
+    "reflux-promise": "^1.0.2",
+    "superagent": "^1.4.0",
+    "classnames": "^2.2.0",
+    "quill": "^0.20.1",
+    "moment": "^2.10.6"
+  }
+}
