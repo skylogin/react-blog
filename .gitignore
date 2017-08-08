@@ -8,6 +8,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+*.json
+
 # Runtime data
 pids
 *.pid
@@ -61,4 +63,9 @@ typings/
 .env
 
 
+
+db/db.json
+
+
 # End of https://www.gitignore.io/api/node
+

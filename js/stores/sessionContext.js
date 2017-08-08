@@ -5,7 +5,7 @@ import Config from 'appRoot/appConfig';
 import Cookie from 'appRoot/vendor/cookie';
 
 export default Reflux.createStore({
-  listenable: Actions,
+  listenables: Actions,
   endpoint: Config.apiRoot + '/users',
   context: {loggedIn: false},
   getInitialState: function(){

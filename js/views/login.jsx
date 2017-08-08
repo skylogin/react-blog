@@ -27,7 +27,7 @@ export default React.createClass({
   },
   render: function(){
     return(
-      <form className="login-form" onSubmit={this.login}>
+      <form className="login-form" onSubmit={this.logIn}>
         <fieldset>
           <legend>Log In</legend>
           <BasicInput name="username" type="text" placeholder="username" />
