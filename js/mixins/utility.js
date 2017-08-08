@@ -39,13 +39,13 @@ export function validate(val, constraints){
     }
   };
 
-  if(!constraints || typeof contraints !== 'object'){
+  if(!constraints || typeof constraints !== 'object'){
     return true;
   }
 
   //각 제약조건 검사
   for(let constraint in constraints){
-    let validator, curentConstraint;
+    let validator, currentConstraint;
 
     if(constraints.hasOwnProperty(constraint) && validators.hasOwnProperty(constraint.toLowerCase())){
       validator = validators[constraint.toLowerCase()];
@@ -74,10 +74,10 @@ export var formMixins = {
     }
     return this.refs[ref]?
       ReactDOM.findDOMNode(this.refs[ref]).querySelector('input'):
-      ReactDOM.findDOMNode(this).querySelector('[name=' + ref + ']input');
+      ReactDOM.findDOMNode(this).querySelector('[name=' + ref + '] input');
   },
   validateField: function(fieldName, constraintOverride){
-    let fieldVal = this.getInputEle(fieldName).value, currentConsraint, errors;
+    let fieldVal = this.getInputEle(fieldName).value, currentConstraint, errors;
 
     if(fieldName in this.constraints){
       currentConstraint = constraintOverride || this.constraints[fieldName];
@@ -88,7 +88,3 @@ export var formMixins = {
     }
   }
 };
-
-
-
-
