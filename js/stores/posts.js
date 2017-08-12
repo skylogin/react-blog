@@ -7,22 +7,49 @@ export default Reflux.createStore({
   listenables: Actions,
   endpoint: Config.apiRoot + '/posts',
   posts: [],
-  // called when mixin is used to init the component state
-  getInitialState: function () {
-    return this.posts;
-  },
-  init: function () {
-    Request
-      .get(this.endpoint)
-      .end(function (err, res) {
-        if (res.ok) {
-          this.posts = res.body;
-          this.trigger(this.posts);
-        } else {
+  getPostsByPage: function(page=1, params){
+    var start = Config.pageSize * (page-1),
+        end = start + Config.pageSize,
+        query = {
+          '_sort': 'date',
+          '_order': 'DESC',
+          '_start': Config.pageSize * (page-1),
+          '_end': Config.pageSize * (page-1) + Config.pageSize
+        },
+        self = this;
+
+        if(typeof params === 'object'){
+          Object.assign(query, params);
         }
-      }.bind(this));
+
+        if(this.currentRequest){
+          this.currentRequest.abort();
+          this.currentRequest = null;
+        }
+
+        return new Promise(function(resolve, reject){
+          self.currentRequest = Request.get(self.endpoint);
+          self.currentRequest
+                .query(query)
+                .end(function(err, res){
+                  var results = res.body;
+                  function complete(){
+                    resolve({
+                      start: query._start,
+                      end: query._end,
+                      results: results
+                    });
+                  }
+
+                  if(res.ok){
+                    Config.loadTimeSimMs? setTimeout(complete, Config.loadTimeSimMs): complete();
+                  } else{
+                    reject(Error(err));
+                  }
+                  this.currentRequest = null;
+                }.bind(self));
+        });
   },
-  //-- ACTION HANDLERS
   onGetPost: function (id) {
     function req () {
       Request
