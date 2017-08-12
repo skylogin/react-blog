@@ -31,6 +31,27 @@
     float: right;
     padding: 0 @headerHeight 0 0;
 
+    input[type=search] {
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      padding: 0;
+      margin: 0;
+      line-height: 26px;
+      vertical-align: middle;
+      outline: none;
+      padding: 0 18px;
+      width: 120px;
+      font-size: 11px;
+
+      &::placeholder {
+        text-align: center;
+      }
+
+      &:focus {
+        border-color: #666;
+      }
+    }
+
     a {
       color: @blue;
       .slidelink(@blue);

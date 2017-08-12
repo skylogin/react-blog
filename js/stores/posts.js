@@ -42,6 +42,11 @@ export default Reflux.createStore({
                   }
 
                   if(res.ok){
+                    if(params.q){
+                      results = results.filter(function(post){
+                        return params.user? post.user == params.user: true;
+                      })
+                    }
                     Config.loadTimeSimMs? setTimeout(complete, Config.loadTimeSimMs): complete();
                   } else{
                     reject(Error(err));

@@ -13,6 +13,10 @@ export default React.createClass({
     Actions.logOut();
     this.history.pushState('', '/');
   },
+  search: function(){
+    var searchVal = this.refs.search.value;
+    Actions.search(searchVal);
+  },
   render: function(){
     return(
       <header className="app-header">
@@ -20,6 +24,9 @@ export default React.createClass({
           <h1>Re&#923;ction</h1>
         </Link>
         <section className="account-ctrl">
+          <input ref="search" type="search" placeholder="search"
+            defaultValue={this.state.initialQuery}
+            onChange={this.search} />
           {
             this.state.session.loggedIn?
               (
