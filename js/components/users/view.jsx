@@ -18,8 +18,8 @@ export default React.createClass({
       <div className={ Classnames({'user': true, 'small': this.props.small}) }>
         <img className={ Classnames({'profile-img': true, 'small': this.props.small}) } src={user.profileImageData} />
         <div className="user-meta">
-          <strong>{user.blogName}</strong>
-          <small>{user.firstName}&nbsp;{user.lastName}</small>
+          <strong>{user.blogname}</strong>
+          <small>{user.firstname}&nbsp;{user.lastname}</small>
         </div>
       </div>
     ): <div className="user" />;
