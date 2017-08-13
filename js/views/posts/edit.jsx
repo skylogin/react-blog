@@ -66,6 +66,9 @@ export default React.createClass({
     }
     this.quill.setHTML(html);
   },
+  goBack: function(e){
+    history.back();
+  },
   submit: function (e) {
     var postBody = this.quill.getHTML().replace(/data-reactid="[^"]+"/g, '')
     ,   fullText = this.quill.getText()
@@ -242,6 +245,9 @@ export default React.createClass({
 
             </div>
           </div>
+          {
+            this.editMode? (<button onClick={this.goBack}>Back to List</button>): ''
+          }
           <button type="submit">{this.editMode ? 'Edit Post' : 'Create Post'}</button>
         </fieldset>
       </form>

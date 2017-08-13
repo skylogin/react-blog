@@ -1,6 +1,6 @@
 import React      from 'react';
 import Reflux     from 'reflux';
-import { Link }   from 'react-router';
+import { Link, History }   from 'react-router';
 import ClassNames from 'classnames';
 import Moment     from 'moment';
 import Actions    from 'appRoot/actions';
@@ -14,7 +14,9 @@ let dateFormat    = 'MM/DD/YYYY HH:mm:ss';
 export default React.createClass({
   mixins: [
     Reflux.connect(Session, 'session'),
-    Reflux.connect(UserStore, 'users')
+    Reflux.connect(UserStore, 'users'),
+    Reflux.connect(PostStore, 'posts'),
+    History
   ],
   getInitialState: function () {
     return {
@@ -48,6 +50,17 @@ export default React.createClass({
       });
     }.bind(this));
   },
+  deletePost: function(){
+    let result = window.confirm("Are you sure that deleting this post?");
+
+    //ok한경우 포스트를 지워버린다.
+    if(result){
+      Actions.deletePost(this.state.session.id, this.state.post.user, this.state.post.id)
+        .then(function (data) {
+          this.history.pushState('', `/posts`);
+        }.bind(this));
+    }
+  },
   render: function () {
     if (this.state.loading) { return <Loader />; }
     var post = this.state.post;
@@ -70,19 +83,10 @@ export default React.createClass({
           </div>
         </aside>
         <summary>{post.summary}</summary>
-        &nbsp;
+        <br/>
         <Link to={`/posts/${post.id}`}>read more</Link>
-        {
-          user.id === this.state.session.id ? (
-            <div>
-              <Link to={`/posts/${post.id}/edit`}>
-                <button>edit post</button>
-              </Link>
-            </div>
-          ) : ''
-        }
       </li>
-    ) : (
+    ): (
       // FULL POST VIEW
       <div className="post-view-full">
 
@@ -97,6 +101,19 @@ export default React.createClass({
           </h2>
           <section className="post-body" dangerouslySetInnerHTML={{__html: post.body}}>
           </section>
+          {
+            user.id === this.state.session.id ? (
+              <div className="post-button">
+                <div>
+                  <Link to={`/posts/${post.id}/edit`}>
+                    <button>edit post</button>
+                  </Link>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <button onClick={this.deletePost}>delete post</button>
+                </div>
+              </div>
+            ) : ''
+          }
         </div>
       </div>
 

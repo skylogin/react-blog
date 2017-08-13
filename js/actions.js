@@ -7,6 +7,9 @@ export default Reflux.createActions({
   'modifyPost':{
     asyncResult: true
   },
+  'deletePost':{
+    asyncResult: true
+  },
   'login':{
     asyncResult: true
   },

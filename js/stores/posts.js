@@ -78,8 +78,7 @@ export default Reflux.createStore({
   },
   onModifyPost: function (post, id) {
     function req () {
-      Request
-        [id ? 'put' : 'post'](id ? this.endpoint+'/'+id : this.endpoint)
+      Request[id ? 'put' : 'post'](id ? this.endpoint+'/'+id : this.endpoint)
         .send(post)
         .end(function (err, res) {
           if (res.ok) {
@@ -102,5 +101,29 @@ export default Reflux.createStore({
         }.bind(this));
     }
     Config.loadTimeSimMs ? setTimeout(req.bind(this), Config.loadTimeSimMs) : req();
+  },
+  onDeletePost: function(userId, postUserId, postId){
+    function req(){
+      if(userId === postUserId){
+        Request['delete'](this.endpoint+'/'+postId)
+          .send(postId)
+          .end(function(err, res){
+            if(res.ok){
+              Actions.deletePost.completed(res);
+
+            } else{
+              Actions.deletePost.failed(err);
+            }
+        }.bind(this));
+      } else{
+        console.err('delete failed');
+        console.err('\tuserId: ' + userId);
+        console.err('\tpostUserId: ' + postUserId);
+        console.err('\tpostId: ' + postId);
+        console.err('');
+      }
+    }
+    Config.loadTimeSimMs ? setTimeout(req.bind(this), Config.loadTimeSimMs) : req();
   }
+
 });
